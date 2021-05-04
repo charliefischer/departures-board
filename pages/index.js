@@ -8,7 +8,7 @@ export default function Home() {
   let allFlights = []
 
   const fetchFlights = () => {
-    fetch('http://api.aviationstack.com/v1/flights?access_key=f7279e60689b13b0cf20867997c879a1')
+    fetch('http://api.aviationstack.com/v1/flights?access_key=f7279e60689b13b0cf20867997c879a1&limit=10')
     .then(res => res.json())
     .then(data => {
       allFlights.push(data.data)
@@ -33,10 +33,10 @@ export default function Home() {
     for(let i in flightsData[0]) {
       let flightTime = new Date(flightsData[0][i].departure.estimated)
 
-      departureTimeText += `${flightTime.getHours().toString().padStart(2, '0')} : ${flightTime.getMinutes().toString().padStart(2, '0')}<br />`
-      departuresText += `${flightsData[0][i].departure.iata}<br />`
-      arrivalsText += `${flightsData[0][i].arrival.iata}<br />`
-      flightIdsText += `${flightsData[0][i].flight.number}<br />`
+      departureTimeText += `<p>${flightTime.getHours().toString().padStart(2, '0')} : ${flightTime.getMinutes().toString().padStart(2, '0')}</p>`
+      departuresText += `<p>${flightsData[0][i].departure.iata}</p>`
+      arrivalsText += `<p>${flightsData[0][i].arrival.airport}</p>`
+      flightIdsText += `<p>${flightsData[0][i].flight.number}</p>`
     }
 
     departureTime.innerHTML = departureTimeText
@@ -60,8 +60,15 @@ export default function Home() {
       <h1>The World of Planes</h1>
 
       <div className={styles.board}>
+        <h4 className={styles.col}>Time</h4>
+        <h4 className={styles.col}>Departing</h4>
+        <h4 className={styles.col}>Destination</h4>
+        <h4 className={styles.col}>Flight</h4>
+      </div>
+
+      <div className={styles.board}>
         <div id='departureTime' className={styles.col}>Loading</div>
-        <div id='arrivalTime' className={styles.col}>Loading</div>
+        {/* <div id='arrivalTime' className={styles.col}>Loading</div> */}
         <div id='departure' className={styles.col}>Loading</div>
         <div id='arrival' className={styles.col}>Loading</div>
         <div id='flightno' className={styles.col}>Loading</div>
